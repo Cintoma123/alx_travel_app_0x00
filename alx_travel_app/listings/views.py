@@ -35,7 +35,7 @@ def list_made_by_user(self, request):
     user = self.get_objects()
     serializer = self.Userserializer(data=request.data, many=True)
 if serializer.is_valid():
-    user.make_bookings(serializer.validated_data['listings'])
+    user.make_listings(serializer.validated_data['listings'])
 
     user.save()
     return Response({status: 'success', 'message': 'listings created successfully'}, status=status.HTTP_201_CREATED)
