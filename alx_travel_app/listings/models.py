@@ -4,6 +4,16 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.constraints import UniqueConstraint
 
 '''Model representing a listing in the travel app.'''
+'''create user model if it does not exist'''
+class User(AbstractUser):
+    '''Custom user model for the travel app, extending Django's AbstractUser.'''
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(unique=True)
+    booking = models.ManyToManyField('Booking', related_name='users', blank=True)
+    listings = models.ManyToManyField('Listing', related_name='users', blank=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    
 class Listing(models.model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
